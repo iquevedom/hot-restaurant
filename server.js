@@ -33,45 +33,60 @@ var tables = [
     name: "Mackenzie",
     email: "mackenzie@example.com",
     phone: "000-000-0003",
-  },
+  }/* ,
   {
     id: "isidro",
     name: "Isidro",
     email: "isidro@example.com",
     phone: "000-000-0004",
-  }
+  } */
 ];
+
+var waitingList = [];
 
 // Routes
 // =============================================================
 
 // Basic route that sends the user first to the AJAX Page
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "home.html"));
 });
 
-app.get("/tables", function(req, res) {
+app.get("/tables", function (req, res) {
   res.sendFile(path.join(__dirname, "tables.html"));
 });
 
-app.get("/reserve", function(req, res) {
+app.get("/reserve", function (req, res) {
   res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
 // Displays all characters
-app.get("/api/tables", function(req, res) {
+/* app.get("/api/tables", function(req, res, res2) {
+   console.log((tablesAvailable)); 
+  return (res.json(tables), res2.json(waitingList));
+}); */
+
+
+app.get("/api/tables", function (req, res) {
   /* console.log((tablesAvailable)); */
   return res.json(tables);
 });
 
+
+app.get("/api/waitLists", function (req, res) {
+  /* console.log((tablesAvailable)); */
+  res = res.json(waitingList);
+});
+
+
 // Displays a single character, or returns false
-app.get("/api/tables/:tables", function(req, res) {
+app.get("/api/tables/:tables", function (req, res) {
   var chosen = req.params.tables;
 
   console.log(chosen);
 
   for (var i = 0; i < tables.length; i++) {
-    if (chosen === tables[i].routeName) {
+    if (chosen === tables[i].name) {
       return res.json(tables[i]);
     }
   }
@@ -80,24 +95,30 @@ app.get("/api/tables/:tables", function(req, res) {
 });
 
 // Create New Characters - takes in JSON input
-app.post("/api/tables", function(req, res) {
+app.post("/api/tables", function (req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
   var newRes = req.body;
 
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newRes.id = newRes.name.replace(/\s+/g, "").toLowerCase();
+  newRes.name = newRes.name.replace(/\s+/g, "").toLowerCase();
 
   console.log(newRes);
 
-  tables.push(newRes);
+  if (tables.length < 4) {
+    tables.push(newRes)
+  } else {
+    waitingList.push(newRes);
+  }
+
+ /*  console.log(waitingList[0].name); */
 
   res.json(newRes);
 });
 
 // Starts the server to begin listening
 // =============================================================
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
 });
