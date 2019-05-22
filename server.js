@@ -6,7 +6,8 @@ var path = require("path");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 3000;
+/* var PORT = process.env.PORT || 3170; */
+var PORT = 3180;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -16,24 +17,29 @@ app.use(express.json());
 // =============================================================
 var tables = [
   {
-    id: "afsldfjlsdnf",
-    name: "Ahmed",
-    email: "ahmed@example.com",
-    phone: 000-000-0000,
+    id: "bryce",
+    name: "Bryce",
+    email: "bryce@example.com",
+    phone: "000-000-0001",
   },
   {
-    id: "rt4t4gdgr",
-    name: "Ashley",
-    email: "ahmed@example.com",
-    phone: 000-000-0000,
+    id: "ashlie",
+    name: "Ashlie",
+    email: "ashlie@example.com",
+    phone: "000-000-0002",
   },
   {
-    id: "afsldfjlsdnf",
+    id: "mackenzie",
+    name: "Mackenzie",
+    email: "mackenzie@example.com",
+    phone: "000-000-0003",
+  },
+  {
+    id: "isidro",
     name: "Isidro",
-    email: "ahmed@example.com",
-    phone: 000-000-0000,
-  },
-  
+    email: "isidro@example.com",
+    phone: "000-000-0004",
+  }
 ];
 
 // Routes
@@ -54,6 +60,7 @@ app.get("/reserve", function(req, res) {
 
 // Displays all characters
 app.get("/api/tables", function(req, res) {
+  /* console.log((tablesAvailable)); */
   return res.json(tables);
 });
 
