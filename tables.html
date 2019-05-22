@@ -66,9 +66,32 @@
 
         <script type="text/javascript">
 
+            function ajaxCall() {
+                $.ajax({
+                    url: "/api/tables/",
+                    method: "GET"
+                }).then(function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        var listGroupItem = $("<li class='list-group-item' mt-4>");
+
+                        listGroupItem.append($("<h2>").text("Table # " + (i + 1)));
+                        listGroupItem.append($("<h4>").text("Id     : " + data[i].id));
+                        listGroupItem.append($("<h4>").text("Name   : " + data[i].name));
+                        listGroupItem.append($("<h4>").text("Email  : " + data[i].email));
+                        listGroupItem.append($("<h4>").text("Phone  : " + data[i].phone));
+
+                        $("#table-list").append(listGroupItem);
+                    }
+                })
+            }
+
+            ajaxCall();
+
+            /*
             $.get("/api/tables", function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    /*  console.log(i); */
+                   
                     console.log(data[i].id);
                     console.log(data[i].name);
                     console.log(data[i].email);
@@ -84,28 +107,59 @@
                     $("#table-list").append(listGroupItem);
                 }
             });
+            */
+            function waitingList() {
+                $.ajax({
+                    url: "/api/waitLists",
+                    method: "GET"
+                }).then(function (data2) {
+                    if (data2[0].name) {
+                        for (var i = 0; i < data2.length; i++) {
+                            console.log("cero");
+                            console.log(data2[i].id);
+                            console.log(data2[i].name);
+                            console.log(data2[i].email);
+                            console.log(data2[i].phone);
+                            var listGroupItem2 = $("<li class='list-group-item' mt-4>");
 
-            $.get("/api/waitLists", function (data2) {
-                if (data2[0].name) {
-                    for (var i = 0; i < data2.length; i++) {
-                        console.log("cero");
-                        console.log(data2[i].id);
-                        console.log(data2[i].name);
-                        console.log(data2[i].email);
-                        console.log(data2[i].phone);
-                        var listGroupItem2 = $("<li class='list-group-item' mt-4>");
+                            listGroupItem2.append($("<h2>").text("Wait # " + (i + 1)));
+                            listGroupItem2.append($("<h4>").text("Id     : " + data2[i].id));
+                            listGroupItem2.append($("<h4>").text("Name   : " + data2[i].name));
+                            listGroupItem2.append($("<h4>").text("Email  : " + data2[i].email));
+                            listGroupItem2.append($("<h4>").text("Phone  : " + data2[i].phone));
 
-                        listGroupItem2.append($("<h2>").text("Wait # " + (i + 1)));
-                        listGroupItem2.append($("<h4>").text("Id     : " + data2[i].id));
-                        listGroupItem2.append($("<h4>").text("Name   : " + data2[i].name));
-                        listGroupItem2.append($("<h4>").text("Email  : " + data2[i].email));
-                        listGroupItem2.append($("<h4>").text("Phone  : " + data2[i].phone));
-
-                        $("#wait-list").append(listGroupItem2);
+                            $("#wait-list").append(listGroupItem2);
+                        }
                     }
-                }
-            });
+                })
+            }
+            
+                
+                waitingList();
 
+                /*
+                $.get("/api/waitLists", function (data2) {
+                    if (data2[0].name) {
+                        for (var i = 0; i < data2.length; i++) {
+                            console.log("cero");
+                            console.log(data2[i].id);
+                            console.log(data2[i].name);
+                            console.log(data2[i].email);
+                            console.log(data2[i].phone);
+                            var listGroupItem2 = $("<li class='list-group-item' mt-4>");
+
+                            listGroupItem2.append($("<h2>").text("Wait # " + (i + 1)));
+                            listGroupItem2.append($("<h4>").text("Id     : " + data2[i].id));
+                            listGroupItem2.append($("<h4>").text("Name   : " + data2[i].name));
+                            listGroupItem2.append($("<h4>").text("Email  : " + data2[i].email));
+                            listGroupItem2.append($("<h4>").text("Phone  : " + data2[i].phone));
+
+                            $("#wait-list").append(listGroupItem2);
+                        }
+                    }
+                    
+                });
+                */
         </script>
 
 </body>
