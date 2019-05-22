@@ -86,7 +86,7 @@ app.get("/api/tables/:tables", function (req, res) {
   console.log(chosen);
 
   for (var i = 0; i < tables.length; i++) {
-    if (chosen === tables[i].routeName) {
+    if (chosen === tables[i].name) {
       return res.json(tables[i]);
     }
   }
